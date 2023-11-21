@@ -11,7 +11,6 @@ import javascript
  */
 predicate isLongerThan10Lines(Function func) {
     func.getNumLines() > 10
-  )
 }
 
 from Function f
