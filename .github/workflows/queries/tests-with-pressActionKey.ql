@@ -35,7 +35,7 @@ predicate calls(Function caller, Function callee) {
   )
 }
 
-from Function test
+from Function test, Function callee
 where isTest(test) and
       hasPressActionKey(callee)
       and calls(test, callee)
