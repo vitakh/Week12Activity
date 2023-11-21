@@ -6,8 +6,11 @@
  */
 import javascript
 
+/**
+ * Holds if a function has "pressActionKey"
+ */
 predicate hasPressActionKey(Function f) {
-  f.getACallee().getName() = "pressActionKey"
+  f.getName() = "pressActionKey"
 }
 
 /**
@@ -22,7 +25,18 @@ predicate isTest(Function test) {
   )
 }
 
+/**
+* Holds if `caller` contains a call to `callee`.
+*/
+predicate calls(Function caller, Function callee) {
+  exists(DataFlow::CallNode call |
+    call.getEnclosingFunction() = caller and
+    call.getACallee() = callee
+  )
+}
+
 from Function test
 where isTest(test) and
-      hasPressActionKey(test)
+      hasPressActionKey(callee)
+      and calls(test, callee)
 select test, "contains function pressActionKey"
