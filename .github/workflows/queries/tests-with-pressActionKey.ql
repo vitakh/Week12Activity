@@ -7,9 +7,22 @@
 import javascript
 
 predicate hasPressActionKey(Function f) {
-  f.getName() = "pressActionKey";
+  f.getACallee().getName() = "pressActionKey"
 }
 
-from File file
-where hasPressActionKey(file)
-select file, "Tests contain function pressActionKey"
+/**
+ * Holds if a function is a test.
+ */
+predicate isTest(Function test) {
+  exists(CallExpr describe, CallExpr it |
+    describe.getCalleeName() = "describe" and
+    it.getCalleeName() = "it" and
+    it.getParent*() = describe and
+    test = it.getArgument(1)
+  )
+}
+
+from Function test, Function callee
+where isTest(test) and
+      hasPressActionKey(callee)
+select test, "contains function pressActionKey"
