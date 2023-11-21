@@ -24,5 +24,5 @@ predicate isTest(Function test) {
 
 from Function test, Function callee
 where isTest(test) and
-      hasPressActionKey(callee)
+      hasPressActionKey(test)
 select test, "contains function pressActionKey"
