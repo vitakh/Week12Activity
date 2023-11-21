@@ -15,4 +15,4 @@ predicate isLongerThan10Lines(Function func) {
 
 from Function f
 where isLongerThan10Lines(f)
-select f, f.getName(), f.getNumLines(), "is longer than 10 lines"
+select f, "is longer than 10 lines"
